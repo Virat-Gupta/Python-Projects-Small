@@ -17,7 +17,7 @@
 ## Cards are not removed from the deck as they are drawn.
 ## The computer is the dealer.
 
-logo = """
+logo = r"""
 .------.            _     _            _    _            _    
 |A_  _ |.          | |   | |          | |  (_)          | |   
 |( \/ ).-----.     | |__ | | __ _  ___| | ___  __ _  ___| | __
@@ -29,22 +29,17 @@ logo = """
 """
 
 import random
-#cars array temp initialize
+
+# cards array temp initialize
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-name = "player"
+
 def generateCard():
     return random.choice(cards)
 
-def showCards(showFullDealer,dealer,player):
-    print(f"Your Cards : {player}  |  SUM = {sum(player)}")
-    if (not showFullDealer):
-        print(f"Dealers Cards: [{dealer[0]}, hidden]")
-    else:
-        print(f"Dealers Cards: {dealer}  |  SUM = {sum(dealer)}")
 def sumCards(player) -> int:
-    if (sum(player) == 21 and len(player) == 2):
-        return -1 
-    while (11 in player and sum(player) > 21):
+    if sum(player) == 21 and len(player) == 2:
+        return 0  # Blackjack
+    while 11 in player and sum(player) > 21:
         player.remove(11)
         player.append(1)
     return sum(player)
@@ -69,13 +64,12 @@ def compare(dealer, player):
     else:
         return "You lose "
 
-
-def startGamemMain(dealer: list,player: list):
-    #deal 2 cards each
+def startGameMain(dealer: list, player: list):
+    # deal 2 cards each
     for _ in range(2):
         dealer.append(generateCard())
         player.append(generateCard())
-    #show the player cards and one card of dealer
+
     gameOver = False
     while not gameOver:
         user_score = sumCards(player)
@@ -91,17 +85,15 @@ def startGamemMain(dealer: list,player: list):
                 player.append(generateCard())
             else:
                 gameOver = True
-    computer_score = sumCards(dealer)
-    user_score = sumCards(player)    
+
     while computer_score != 0 and computer_score < 17:
         dealer.append(generateCard())
         computer_score = sumCards(dealer)
 
     print(f"   Your final hand: {player}, final score: {user_score}")
     print(f"   Computer's final hand: {dealer}, final score: {computer_score}")
-    print(compare(dealer,player))
+    print(compare(dealer, player))
 
-    # showCards(False,dealer,player)
-print(logo)
 while input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == "y":
-    startGamemMain([],[])
+    print(logo)
+    startGameMain([], [])
