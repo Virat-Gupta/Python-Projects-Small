@@ -323,9 +323,7 @@ data = [
 
 import random
 
-def newRound():
-    compareA = random.choice(data)
-    compareB = random.choice(data)
+def nextRound(compareA,compareB):
 
     while (compareB == compareA): compareB = random.choice(data)
     print(f"Compare A: {compareA['name']}, {compareA['description']} from {compareA['country']}")
@@ -341,9 +339,12 @@ def newRound():
         return False
 
 def startGame(score):
-    while (newRound()) :
+    compareA = random.choice(data)
+    compareB = random.choice(data)
+    while (nextRound(compareA,compareB)) :
         score += 1
         print(f"You are Right! Current Score: {score}")
+        compareA = compareB
     print(f"Sorry Thats Wrong, Final Score: {score}")
 
 
