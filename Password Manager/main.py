@@ -61,7 +61,7 @@ def addPassword():
         try:
             with open("Password Manager\\data.json","r") as passFile:
                 data = json.load(passFile)
-        except FileNotFoundError:
+        except (FileNotFoundError , json.decoder.JSONDecodeError):
             with open("Password Manager\\data.json","w") as passFile:
                 json.dump(new_data, passFile, indent=4)
         else :
