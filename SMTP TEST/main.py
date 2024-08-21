@@ -1,10 +1,11 @@
 import smtplib
 import datetime as dt
 import random
+import os
 
-my_email = "automatagmai@gmail.com"
-my_pass = "iicv mbkx zvzk rrbn"
-reciever_email = "viratg@myyahoo.com"
+my_email = os.environ.get("EMAIL_AUTO")
+my_pass = os.environ.get("EMAIL_AUTO_PASS")
+reciever_email = "EMAIL HERE"
 
 now = dt.datetime.now()
 if now.weekday() == 0:
