@@ -2,9 +2,10 @@ import smtplib
 import pandas
 import datetime
 import random
+import os
 
-MY_EMAIL = "automatagmai@gmail.com"
-MY_PASS = "iicv mbkx zvzk rrbn"
+MY_EMAIL = os.environ.get("EMAIL_AUTO")
+MY_PASS = os.environ.get("EMAIL_AUTO_PASS")
 
 today = (datetime.datetime.now().month, datetime.datetime.now().day)
 
