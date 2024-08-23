@@ -20,9 +20,6 @@ auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
 from_phone = os.environ.get("FROM_PH")
 to_phone : str = os.environ.get("TO_PH") # type: ignore
 
-
-    ## STEP 1: Use https://www.alphavantage.co/documentation/#daily
-# When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 parameters = {
     "function" : "TIME_SERIES_DAILY",
     "symbol": STOCK_NAME,
