@@ -8,11 +8,11 @@ account_sid = os.environ.get("TWILIO_ACCOUTN_SID")
 auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
 
 from_phone = os.environ.get("FROM_PH")
-to_phone = os.environ.get("TO_PH")
+to_phone : str = os.environ.get("TO_PH") # type: ignore
 
 parameters = {
-    "lat":51.588470,
-    "lon":5.326350,
+    "lat":21.027763,
+    "lon":105.834160, 
     "cnt":4,
     "appid":API_KEY
 }
