@@ -22,8 +22,11 @@ for city_data in sheet_data:
 data_manager.destination_data = sheet_data
 data_manager.update_destination_data()
 
+#Retrieve Customer Emails
+customer_data = data_manager.get_customer_emails()
+customer_email_list = [row["whatIsYourEmail ?"] for row in customer_data]
 
-# Seach for Flights
+# Seach for Flights DIrect
 tomorrow = datetime.now() + timedelta(days=1)
 six_month_from_today = datetime.now() + timedelta(days=(6*30))
 
@@ -36,4 +39,16 @@ for destination in sheet_data:
         # if cheapest_flight.price < destination["lowestPrice"]
         print(f"{destination["city"]} : £{cheapest_flight.price}")
         notification_manager.send_flight_notification(cheapest_flight)
+        notification_manager.send_email(customer_email_list,cheapest_flight)
+    else :
+        print(f"NO DIRECT FLIGHT for {destination["city"]}. LOOKING FOR INDIRECT...")
+        stopover_flights = flight_search.get_flights_to(destination["iataCode"], tomorrow, six_month_from_today, False)
+
+        cheapest_flight = find_cheapest_flight(stopover_flights)
+        if cheapest_flight.price != "N/A":
+            print(f"{destination["city"]} : £{cheapest_flight.price}")
+            notification_manager.send_flight_notification(cheapest_flight)
+            notification_manager.send_email(customer_email_list,cheapest_flight)
+        else :
+            print("NO INDIRECT AVAILABLE TOO.")
     time.sleep(1)

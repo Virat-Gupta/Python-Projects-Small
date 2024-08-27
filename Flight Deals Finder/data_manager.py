@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SHEETY_PRICES_ENDPOINT = f"https://api.sheety.co/{os.environ["SHEETY_PHILL"]}/flightDeals/prices"
+SHEETY_USERS_ENDPOINT = f"https://api.sheety.co/{os.environ["SHEETY_PHILL"]}/flightDeals/users"
 
 class DataManager:
     
@@ -14,6 +15,7 @@ class DataManager:
         self._password = os.environ["SHEETY_PASSWORD"]
         self._authorization = HTTPBasicAuth(username=self._user,password=self._password)
         self.destination_data = {}
+        self.customer_data = {}
     
     def get_destination_data(self):
         response = requests.get(url=SHEETY_PRICES_ENDPOINT, auth=self._authorization)
@@ -34,3 +36,12 @@ class DataManager:
                 auth=self._authorization,
                 json=new_data
             )
+    
+    def get_customer_emails(self) :
+        response = requests.get(url=SHEETY_USERS_ENDPOINT, auth=self._authorization)
+        data = response.json()
+        self.customer_data = data["users"]
+        return self.customer_data
+
+# from pprint import pprint
+# pprint(DataManager().get_customer_emails()[0]["whatIsYourEmail ?"])
